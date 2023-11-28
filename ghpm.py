@@ -1,5 +1,3 @@
-## attention, pre ALPHA code!
-
 """
 ghpm.py
 Copyright (C) 2023 by Kai Froeb
