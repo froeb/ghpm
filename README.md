@@ -55,11 +55,12 @@ The basic commands for GHPM are:
 
 Work in progress, beta status.
 
-The script should now be able to handle the first program/repository that is defined in the repos.json
-Tested with the repo for the Thorium browser (see definition in repos.json) only so far
-Only works if repos.json is filled correctly, according to the documentation in repos.md
-No code for handling more than one program/repository so far, no code for defining, changing or removing repos
-
+- The script should now be able to handle the first program/repository that is defined in the repos.json
+- Tested with the repo for the Thorium browser (see definition in repos.json) only so far
+- Only works if repos.json is filled correctly, according to the documentation in repos.md
+- No code for handling more than one program/repository so far, no code for defining, changing or removing repos
+- Does only handle debian packages (deb files) so far
+  
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
