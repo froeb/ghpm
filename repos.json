@@ -1,0 +1,8 @@
+[
+    {
+        "owner": "Alex313031",
+        "repo": "Thorium",
+        "asset_pattern": "thorium-browser_*.deb",
+        "package_name": "thorium-browser"
+    }
+]
