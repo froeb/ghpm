@@ -22,3 +22,6 @@ Here's an example of an entry for the Thorium browser:
         "package_name": "thorium-browser"
     }
 ]
+
+
+This entry will direct GHPM to manage the Thorium browser package from the Alex313031/Thorium repository, specifically targeting .deb files for installation and updates.
