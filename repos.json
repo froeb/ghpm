@@ -3,6 +3,8 @@
         "owner": "Alex313031",
         "repo": "Thorium",
         "asset_pattern": "thorium-browser_*.deb",
-        "package_name": "thorium-browser"
+        "package_name": "thorium-browser",
+        "version_command": "thorium-browser --version",
+        "version_result_regular_expression": "\\b(\\d+\\.\\d+\\.\\d+\\.\\d+)\\b"
     }
 ]
