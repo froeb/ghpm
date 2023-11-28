@@ -30,16 +30,18 @@ GHPM uses a JSON configuration file (repos.json) to manage the repositories. Her
 ```json
 [
   {
-    "owner": "exampleOwner",
-    "repo": "exampleRepo",
-    "asset_pattern": "*.deb",
-    "package_name": "example-package"
+        "owner": "Alex313031",
+        "repo": "Thorium",
+        "asset_pattern": "thorium-browser_*.deb",
+        "package_name": "thorium-browser",
+        "version_command": "thorium-browser --version",
+        "version_result_regular_expression": "\\b(\\d+\\.\\d+\\.\\d+\\.\\d+)\\b"
   }
   // Add more repositories as needed
 ]
 ```
-
 Edit repos.json to include the repositories you want to manage.
+See repos.md for a detailed decription of these parameters.
 
 ## Usage
 
