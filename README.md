@@ -45,6 +45,7 @@ See repos.md for a detailed decription of these parameters.
 
 ## Usage
 
+```bash
 usage: python ghpm.py [-h] [-v] [-i] [-u] [-r]
 
 options:
@@ -53,12 +54,16 @@ options:
   -i, --install  install package(s) defined in repos.json
   -u, --update   update package(s) defined in repos.json
   -r, --remove   remove package(s) defined in repos.json
+```
 
 e.g. to install package(s) defined in repos.json, call
+```bash
 python ghpm.py -i
+```
 or
+```bash
 python ghpm.py --install
-
+```
 ## Known limitations
 
 Work in progress, beta status.
