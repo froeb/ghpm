@@ -1,78 +1,94 @@
-# GitHub Package/Program Manager (ghpm)
+# GHPM (GitHub Package/Program Manager)
 
-ghpm is a tool designed to streamline the management of software packages from GitHub repositories. It's inspired by the functionality of traditional package managers like `apt`, tailored for the unique environment of GitHub. GHPM allows users to install, update, and remove software directly from GitHub repositories, handling various types of releases including `.deb`, `.rpm`, and others.
+GHPM is a script that automates the installation, update, or removal of applications hosted on GitHub repositories for Debian-based Linux distributions. It checks for the latest version of the program from its GitHub releases, downloads the package, and manages the installation or update using Debian's package management tools. The script also provides functionality for removing an existing installation of the program.
 
 ## Features
 
-- **Install, Update, and Remove**: Easily manage software directly from GitHub.
-- **Multi-Repository Support**: Handle multiple repositories through a JSON configuration.
-- **Flexible and User-Friendly**: Designed with usability in mind, mimicking familiar package manager commands.
-
-## Getting Started
-
-To get started with GHPM, clone this repository to your local machine:
-
-```bash
-git clone https://github.com/froeb/ghpm.git
-cd ghpm
-```
-
-## Prerequisites
-
-    Python 3.x
-    Access to GitHub repositories
-
+- Supports installation, update, and removal of software packages from specified GitHub repositories.
+- Automatically fetches the latest release assets based on provided filters.
+- Handles Debian (`*.deb`) packages with dependency resolution.
+- Utilizes `apt-get` for installations to manage dependencies effectively.
+- Configurable through `repos.json` for specifying repositories and `package_commands.json` for package management commands.
 
 ## Configuration
 
-GHPM uses a JSON configuration file (repos.json) to manage the repositories. Here's an example structure:
+### Repositories Configuration (`repos.json`)
+
+Define the repositories and packages to manage in `repos.json`. Each entry should specify the following:
+
+- `owner`: GitHub username or organization name.
+- `repo`: Repository name.
+- `package_name`: Name of the package.
+- `version_command`: Command to check the installed version of the package.
+- `version_result_regular_expression`: Regex to extract the version number from the command output.
+- `package_type`: Type of package (e.g., `deb` for Debian packages).
+- `release_asset_filter`: Filter to identify the correct asset from the GitHub release.
+
+#### Example entry:
 
 ```json
-[
-  {
-        "owner": "Alex313031",
-        "repo": "Thorium",
-        "asset_pattern": "thorium-browser_*.deb",
-        "package_name": "thorium-browser",
-        "version_command": "thorium-browser --version",
-        "version_result_regular_expression": "\\b(\\d+\\.\\d+\\.\\d+\\.\\d+)\\b"
-  }
-  // Add more repositories as needed
-]
+{
+    "owner": "example",
+    "repo": "example-repo",
+    "package_name": "example-package",
+    "version_command": "example-package --version",
+    "version_result_regular_expression": "(\\d+\\.\\d+\\.\\d+)",
+    "package_type": "deb",
+    "release_asset_filter": "example-package_*.deb"
+}
 ```
-Edit repos.json to include the repositories you want to manage.
-See repos.md for a detailed decription of these parameters.
+
+### Package Commands Configuration (package_commands.json)
+
+Define the package management commands for different package types in package_commands.json. Specify the installation, update, and removal commands.
+
+#### Example:
+
+```json
+
+{
+    "deb": {
+        "install_command": "sudo apt-get install -f {package}",
+        "update_command": "sudo apt-get update && sudo apt-get install -f {package}",
+        "remove_command": "sudo apt-get remove {package}"
+    }
+}
+```
 
 ## Usage
 
 ```bash
-usage: python ghpm.py [-h] [-v] [-i] [-u] [-r]
+Run ghpm.py with the following options:
 
-options:
-  -h, --help     show this help message and exit
-  -v, --version  show the version number and exit
-  -i, --install  install package(s) defined in repos.json
-  -u, --update   update package(s) defined in repos.json
-  -r, --remove   remove package(s) defined in repos.json
+    -i, --install: Install packages defined in repos.json.
+    -u, --update: Update packages defined in repos.json.
+    -r, --remove: Remove packages defined in repos.json.
+    -v, --version: Show the script version and exit.
 ```
 
-e.g. to install package(s) defined in repos.json, call
+### Example:
+
 ```bash
-python ghpm.py -i
-```
-or
-```bash
-python ghpm.py --install
-```
-## Known limitations
 
-Work in progress, beta status.
+python ghpm.py -i  # Install packages
+```
 
-- The script should now be able to handle the first program/repository that is defined in the repos.json
-- Tested with the repo for the Thorium browser (see definition in repos.json) only so far
-- Only works if repos.json is filled correctly, according to the documentation in repos.md
-- No code for handling more than one program/repository so far, no code for defining, changing or removing repos
-- Does only handle debian packages (deb files) so far
+## Dependencies
+
+    Python 3
+    requests library
+    Access to apt-get for Debian-based distributions.
+
+## Limitations
+
+    Currently supports only Debian package types (*.deb).
+    Requires properly formatted repos.json and package_commands.json for operation.
+    Requires a lot of testing and possible bugfixing
+
+## License
+
+GHPM is released under the GNU General Public License v3.0.
+
   
 ## Contributing
 
@@ -94,3 +110,7 @@ Distributed under the GPL-3.0 License. See LICENSE for more information.
 Kai Froeb - github@froeb.net
 Home page: https://kai.froeb.net
 Project Link: https://github.com/froeb/ghpm
+
+## Final Note
+
+This README is subject to change as GHPM continues to evolve and improve.
