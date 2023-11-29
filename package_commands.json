@@ -1,0 +1,13 @@
+{
+"deb": {
+        "install_command": "sudo apt-get install -f {package}",
+        "update_command": "sudo apt-get update && sudo apt-get install -f {package}",
+        "remove_command": "sudo apt-get remove {package}"
+    },
+        "rpm": {
+        "install_command": "sudo rpm -i {package}",
+        "update_command": "sudo yum update && sudo rpm -i {package}",
+        "remove_command": "sudo yum remove {package}"
+    }
+}
+
