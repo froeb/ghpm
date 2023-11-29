@@ -16,10 +16,19 @@ Description:
     The programs and their github repositories are stored in the repos.json file.
 
 Usage:
-    To install programs: python ghpm.py install
-    To update programs: python ghpm.py update
-    To remove programs: python ghpm.py remove
-
+    python ghpm.py [-h] [-v] [-i] [-u] [-r]
+    options:
+      -h, --help     show this help message and exit
+      -v, --version  show the version number and exit
+      -i, --install  install package(s) defined in repos.json
+      -u, --update   update package(s) defined in repos.json
+      -r, --remove   remove package(s) defined in repos.json
+    
+    e.g. to install package(s) defined in repos.json, call
+    python ghpm.py -i
+    or
+    python ghpm.py --install
+    
 Dependencies:
     This script uses 'nala' for package management, which is a front-end for 'apt'.
     Ensure 'nala' is installed on your system. To install 'nala', use:
