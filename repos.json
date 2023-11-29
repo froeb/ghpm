@@ -2,9 +2,18 @@
     {
         "owner": "Alex313031",
         "repo": "Thorium",
-        "asset_pattern": "thorium-browser_*.deb",
         "package_name": "thorium-browser",
         "version_command": "thorium-browser --version",
-        "version_result_regular_expression": "\\b(\\d+\\.\\d+\\.\\d+\\.\\d+)\\b"
-    }
-]
+        "version_result_regular_expression": "\\b(\\d+\\.\\d+\\.\\d+\\.\\d+)\\b",
+        "package_type": "deb",
+        "release_asset_filter": "*.deb"
+    },
+    {
+        "owner": "balena-io",
+        "repo": "etcher",
+        "package_name": "balena-etcher-electron",
+        "version_command": "balena-etcher-electron --version",
+        "version_result_regular_expression": "(\\d+\\.\\d+\\.\\d+)",
+        "package_type": "deb",
+        "release_asset_filter": "balena-etcher_*_amd64.deb"
+    }]
