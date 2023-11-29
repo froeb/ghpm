@@ -45,11 +45,19 @@ See repos.md for a detailed decription of these parameters.
 
 ## Usage
 
-The basic commands for GHPM are:
+usage: python ghpm.py [-h] [-v] [-i] [-u] [-r]
 
-    To install a package: python ghpm.py install
-    To update a package: python ghpm.py update
-    To remove a package: python ghpm.py remove
+options:
+  -h, --help     show this help message and exit
+  -v, --version  show the version number and exit
+  -i, --install  install package(s) defined in repos.json
+  -u, --update   update package(s) defined in repos.json
+  -r, --remove   remove package(s) defined in repos.json
+
+e.g. to install package(s) defined in repos.json, call
+python ghpm.py -i
+or
+python ghpm.py --install
 
 ## Known limitations
 
