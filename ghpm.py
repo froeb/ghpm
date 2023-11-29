@@ -25,20 +25,18 @@ Dependencies:
     Ensure 'nala' is installed on your system. To install 'nala', use:
     sudo apt install nala
     
-Known limitations:
-    Work in progress, beta status.
-    The program should now be able to handle the first program/repository that is defined in the repos.json
-    Tested with the repo for the Thorium browser only so far
-    Only works if repos.json is filled correctly, according to the documentation in repos.md
+Attention:
+    Work in progress, this is pre alpha stuff!
 """
 
-import requests
-import os
 import subprocess
-import argparse
-import tempfile
 import json
-import re
+import sys
+import os 
+import requests 
+from argparse import ArgumentParser
+from tempfile import gettempdir 
+from re import search
 
 def load_config():
     """
@@ -76,7 +74,7 @@ def get_installed_version(program, version_command, version_regex=None):
 
         # Use regex if provided
         if version_regex:
-            match = re.search(version_regex, output)
+            match = search(version_regex, output) 
             if match:
                 return match.group(1)
             else:
@@ -177,22 +175,28 @@ def main():
         print(f"Error in repos.json: {e}")
         return
            
-    parser = argparse.ArgumentParser(description=f'Manage {program} installation.')
-    subparsers = parser.add_subparsers(dest='command')
-    subparsers.required = True
+    # Define the current version of the script
+    SCRIPT_VERSION = "0.1.0-beta"
 
-    # Add parsers for 'install', 'remove', and 'update' commands
-    install_parser = subparsers.add_parser('install')
-    remove_parser = subparsers.add_parser('remove')
-    update_parser = subparsers.add_parser('update')
+    # Setup argparse
+    parser = ArgumentParser(description='GHPM: GitHub based Package/Program Manager')
+    parser.add_argument('-v', '--version', action='version', version=f'GHPM {SCRIPT_VERSION}',
+                        help="show the version number and exit")
+    parser.add_argument('-i', '--install', action='store_true', help="install package(s) defined in repos.json")
+    parser.add_argument('-u', '--update', action='store_true', help="update package(s) defined in repos.json")
+    parser.add_argument('-r', '--remove', action='store_true', help="remove package(s) defined in repos.json")
+    
+    # If no arguments were provided, print the help message and exit
+    if len(sys.argv) == 1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
 
     args = parser.parse_args()
 
-
-    if args.command in ['install', 'update']:
+    if args.install or args.update:
         installed_version = get_installed_version(program, version_command, version_regex)
  
-        if args.command == 'update':
+        if args.update:
             if installed_version is None:
                 print(f"Could not determine the installed version of {program}.")
                 return
@@ -207,12 +211,12 @@ def main():
             print(f"Latest version {latest_version} is already installed.")
             return
 
-        if args.command == 'update':
+        if args.update:
             print(f"Updating {program} from version {installed_version} to {latest_version}...")
 
         print("Latest .deb release URL:", latest_deb_url)
         # Define a general temporary directory for downloads
-        temp_dir = tempfile.gettempdir()
+        temp_dir = gettempdir()
         downloaded_file = download_file(latest_deb_url, temp_dir)
         try:
            install_deb(downloaded_file)
@@ -220,7 +224,7 @@ def main():
         except Exception as e:
            print(f"downloading {downloaded_file} and/or installing it from {temp_dir} failed")
 
-    elif args.command == 'remove':
+    elif args.remove:
         remove_package(program) 
 
 if __name__ == "__main__":
