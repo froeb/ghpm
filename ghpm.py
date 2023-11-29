@@ -185,7 +185,7 @@ def main():
     """
            
     # Define the current version of the script
-    SCRIPT_VERSION = "0.2.0-beta"
+    SCRIPT_VERSION = "0.2.1-beta"
 
     # Setup argparse
     parser = ArgumentParser(description='GHPM: GitHub based Package/Program Manager')
